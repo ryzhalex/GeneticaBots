@@ -25,6 +25,8 @@ class Bot:
 
     def getGenom(self):
         return self.genom
+    def setGenom(self,newgenom):
+        self.genom=newgenom
     def getEnergy(self):
         return self.energy
     def addEnergy(self,points):

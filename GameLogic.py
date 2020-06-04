@@ -4,6 +4,7 @@ from GraphBot import BotGraphics
 from Graphics import HEIGHT
 from Graphics import WIDTH
 from Bot import Bot
+from Mutator import Mutator
 from Stats import Stats
 import random
 
@@ -44,6 +45,7 @@ class GameLogic:
 
         self.field=[]
         self.bots=[]
+        self.mutator = Mutator()
 
         self.graphics=BotGraphics()
         self.generateMap()
@@ -93,6 +95,18 @@ class GameLogic:
             self.bots.append(Bot(x,y,i))
             self.graphics.newBot(x,y,0)
             self.graphics.update()
+    def randomisePositions(self):
+        for bot in self.bots:
+            y = random.randint(0, HEIGHT - 1)
+            x = random.randint(0, WIDTH - 1)
+            bot.setX(x)
+            bot.setY(y)
+            self.graphics.newBot(x,y,0)
+            self.graphics.update()
+
+    def Mutate(self):
+        self.bots=self.mutator.mutation(self.bots,1,1,30)
+        self.randomisePositions()
 
     def moveBot(self,xi,yi,xf,yf,counter):
 
@@ -109,11 +123,12 @@ class GameLogic:
 #Run one round of simulation
 #If bot doesnt eat enought or eats poison it dies
 
-    def run(self):
+    def runRound(self):
         i=0
 
         while (i<50):
             deads=0
+           # print(deads)
             for bot in self.bots:
                 bot.resetCounter()
                 #bot.resetPointer()
@@ -132,13 +147,20 @@ class GameLogic:
                         break
             if(deads==BOTS):
                 self.graphics.setStat(5, self.stat.getMove())
-                print("GG")
+                print("Round is done")
+                break
             self.stat.addMove()
             self.graphics.setStat(1,self.stat.getMove())
             self.graphics.update()
 
 
     #Bot class returns an action code, which is interprited here
+
+    def run(self,times):
+        for i in range(0,times):
+            self.runRound()
+            self.Mutate()
+
 
     def interpritate(self,action,bot):
         if(action>0 and action <=8):
@@ -584,9 +606,6 @@ class GameLogic:
 
 
 
-l=GameLogic()
-l.newBots()
-l.addPoison(100)
-l.addFood(200)
-l.run()
+
+
 
