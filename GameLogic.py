@@ -105,8 +105,9 @@ class GameLogic:
             self.graphics.update()
 
     def Mutate(self):
-        self.bots=self.mutator.mutation(self.bots,1,1,30)
+        self.bots=self.mutator.mutation(self.bots,5,2,15)
         self.randomisePositions()
+
 
     def moveBot(self,xi,yi,xf,yf,counter):
 

@@ -4,4 +4,4 @@ l.newBots()
 l.addPoison(100)
 l.addFood(200)
 
-l.run(3)
+l.run(10)
