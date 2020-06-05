@@ -6,4 +6,4 @@ Each bot has a genom, which is actually a "program code of the bot".
 
 At each round bots "live" and survive in environment with food and poison.
 
-GameLogic.py is currently main class. It should now run one simulation round.
+Start from main
